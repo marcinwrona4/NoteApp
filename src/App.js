@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import NotesList from "./components/NotesList";
+import Header from './components/Header';
+import { useState } from 'react';
+import { nanoid } from 'nanoid';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+const App = function() {
+  const app_name = "NoteApp"; 
+  const [notes, setNotes] = useState([
+    {
+      id: nanoid(),
+      text: 'Sample note',
+    },
+    {
+      id: nanoid(),
+      text: 'Sample note',
+    },
+  ]);
+
+  const create_note = function(text) {
+    const newNote = {
+      id: nanoid(),
+      text: text
+    }
+    const newNotes = [newNote, ...notes];
+    setNotes(newNotes);
+  }
+
+  return(
+  <div className="container">
+    <Header app_name={app_name}/>
+    <NotesList notes={notes} create_note_handler={create_note}/>
+  </div>
   );
 }
 
